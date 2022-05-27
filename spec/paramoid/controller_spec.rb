@@ -12,7 +12,7 @@ describe 'controllers' do
       unwanted: 'hello',
       an_object_filtered: { name: 'value' },
       an_array_filtered: [{ name: 'value' }],
-      an_array_unfiltered: [1, 2, 3, 4, 5],
+      an_array_unfiltered: [1, 2, 3, 4, 5]
     }
   end
 

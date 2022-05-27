@@ -1,7 +1,6 @@
 require 'ostruct'
 
 class PeopleInlineController < ActionController::Base
-
   def index
     create_params
   end
@@ -31,4 +30,3 @@ class PeopleController < ActionController::Base
     sanitize_params!
   end
 end
-

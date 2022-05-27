@@ -25,8 +25,8 @@ module Paramoid
       @context = old_context
     end
 
-    alias_method :list!, :group!
-    alias_method :array!, :group!
+    alias list! group!
+    alias array! group!
 
     # @param [Array<Symbol>] names
     def params!(*names, required: false)

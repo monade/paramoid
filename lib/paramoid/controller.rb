@@ -24,4 +24,4 @@ module Paramoid
   end
 end
 
-ActionController::Base.send :include, Paramoid::Controller if defined?(ActionController::Base)
+ActionController::Base.include Paramoid::Controller if defined?(ActionController::Base)

@@ -7,7 +7,10 @@ describe Paramoid::Object do
   let(:default) { nil }
   let(:transformer) { nil }
   let(:nested) { nil }
-  subject { described_class.new(name, alias_name, nested: nested, transformer: transformer, default: default, required: required) }
+  subject do
+    described_class.new(name, alias_name, nested: nested, transformer: transformer, default: default,
+                                          required: required)
+  end
   let(:sanitized) { subject.sanitize(params) }
 
   describe '#to_params' do
@@ -88,7 +91,10 @@ describe Paramoid::Object do
       let(:required) { true }
 
       it 'raises an error' do
-        expect { subject.ensure_required_params!(params) }.to raise_error(ActionController::ParameterMissing, 'param is missing or the value is empty: some_param')
+        expect do
+          subject.ensure_required_params!(params)
+        end.to raise_error(ActionController::ParameterMissing,
+                           'param is missing or the value is empty: some_param')
       end
     end
 
@@ -96,14 +102,20 @@ describe Paramoid::Object do
       let(:nested) { described_class.new(:nested, nil, required: true) }
 
       it 'raises an error' do
-        expect { subject.ensure_required_params!(params) }.to raise_error(ActionController::ParameterMissing, 'param is missing or the value is empty: nested')
+        expect do
+          subject.ensure_required_params!(params)
+        end.to raise_error(ActionController::ParameterMissing,
+                           'param is missing or the value is empty: nested')
       end
 
       context 'and it\'s required' do
         let(:required) { true }
 
         it 'raises an error on the parent param' do
-          expect { subject.ensure_required_params!(params) }.to raise_error(ActionController::ParameterMissing, 'param is missing or the value is empty: some_param')
+          expect do
+            subject.ensure_required_params!(params)
+          end.to raise_error(ActionController::ParameterMissing,
+                             'param is missing or the value is empty: some_param')
         end
       end
     end

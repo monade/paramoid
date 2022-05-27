@@ -16,8 +16,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.7.0'
   s.homepage    = 'https://rubygems.org/gems/paramoid'
   s.license     = 'MIT'
-  s.add_dependency 'activesupport', ['>= 5', '< 8']
   s.add_dependency 'actionpack', ['>= 5', '< 8']
+  s.add_dependency 'activesupport', ['>= 5', '< 8']
   s.add_development_dependency 'rspec', '~> 3'
   s.add_development_dependency 'rubocop'
 end

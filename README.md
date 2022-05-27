@@ -63,7 +63,7 @@ end
 ```
 
 ### Inline sanitization
-You can also use the sanitizer inline directly in your controller:
+You can also use the sanitizer DSL inline directly in your controller:
 
 ```ruby
 class PeopleController < ApplicationController

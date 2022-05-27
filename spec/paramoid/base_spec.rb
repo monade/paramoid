@@ -21,7 +21,7 @@ describe PersonParamsSanitizer, type: :controller do
         unwanted: 'hello',
         an_object_filtered: { name: 'value' },
         an_array_filtered: [{ name: 'value' }],
-        an_array_unfiltered: [1, 2, 3, 4, 5],
+        an_array_unfiltered: [1, 2, 3, 4, 5]
       }
     end
 
@@ -53,7 +53,7 @@ describe PersonParamsSanitizer, type: :controller do
 
     context 'when the required value is not set' do
       let(:params_hash) do
-        { }
+        {}
       end
       it 'raises an error' do
         expect { sanitized }.to raise_error(ActionController::ParameterMissing)
