@@ -53,17 +53,16 @@ describe PersonParamsSanitizer, type: :controller do
 
     context 'when the required value is not set' do
       let(:params_hash) do
-        {}
+        { }
       end
       it 'raises an error' do
-        skip 'Feature not implemented yet'
-        # expect { sanitized }.to raise_error(ActionController::ParameterMissing)
+        expect { sanitized }.to raise_error(ActionController::ParameterMissing)
       end
     end
 
     context 'when the default is set' do
       let(:params_hash) do
-        { some_default: 2 }
+        { some_default: 2, current_user_id: 1 }
       end
       let 'it replaces the default value' do
         expect(sanitized['some_default']).to eq(2)

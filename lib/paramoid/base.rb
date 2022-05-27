@@ -4,7 +4,8 @@ module Paramoid
     def sanitize(params)
       params = params.permit(*permitted_params)
       scalar_params.transform_params!(params)
-      default_params.merge(params)
+      params = default_params.merge(params)
+      ensure_required_params!(params)
     end
 
     protected
@@ -56,6 +57,11 @@ module Paramoid
 
     def scalar_params
       @scalar_params ||= List.new
+    end
+
+    def ensure_required_params!(params)
+      scalar_params.ensure_required_params!(params)
+      params
     end
 
     def transformers

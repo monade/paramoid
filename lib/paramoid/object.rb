@@ -51,14 +51,36 @@ module Paramoid
       end
     end
 
+    def to_required_params
+      if nested?
+        @nested.to_required_params
+      else
+        @required ? [@name] : []
+      end
+    end
+
+    def ensure_required_params!(params)
+      if @required
+        raise ActionController::ParameterMissing, output_key unless params&.key?(output_key)
+        raise ActionController::ParameterMissing, output_key if params[output_key].nil?
+      end
+
+      @nested.ensure_required_params!(params[output_key]) if nested?
+
+      params
+    end
+
     def to_defaults
-      key = @alias || @name
       if nested?
         nested_defaults = @nested.to_defaults
-        (nested_defaults.present? ? { key => @nested.to_defaults } : {}).with_indifferent_access
+        (nested_defaults.present? ? { output_key => @nested.to_defaults } : {}).with_indifferent_access
       else
-        (@default ? { key => @default } : {}).with_indifferent_access
+        (@default ? { output_key => @default } : {}).with_indifferent_access
       end
+    end
+
+    def output_key
+      @output_key ||= (@alias || @name).to_s
     end
 
     def <<(value)

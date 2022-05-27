@@ -23,8 +23,6 @@ class PersonParamsSanitizer < Paramoid::Base
   def initialize(user = nil)
     params! :first_name, :last_name, :gender
 
-    param! :email, transformer: ->(data) { data&.downcase }
-
     param! :current_user_id, required: true
 
     param! :an_object_filtered
@@ -55,14 +53,34 @@ class PeopleController < ApplicationController
   private
 
   def person_params
+    # The name is automatically inferred by the controller name
+    sanitize_params!
+    # Or you can instantiate a custom one
     # You can pass the current user or nil
-    PersonParamsSanitizer.new(current_user).sanitize(params)
+    # CustomPersonParamsSanitizer.new(current_user).sanitize(params)
+  end
+end
+```
+
+### Inline sanitization
+You can also use the sanitizer inline directly in your controller:
+
+```ruby
+class PeopleController < ApplicationController
+  def create
+    @person = Person.create!(person_params)
+  end
+
+  private
+
+  def person_params
+    sanitize_params! do
+      params! :first_name, :last_name, required: true
+    end
   end
 end
 ```
 
 ## TODO
 * Params type checking and regexp
-* Using the DSL directly in the controller
-* Auto-load params sanitizer by name (Rails magic stuff)
-* Required params
+* Value transformers

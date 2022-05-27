@@ -15,5 +15,11 @@ module Paramoid
     def to_defaults
       inject({}) { |a, b| a.merge!(b.to_defaults) }
     end
+
+    def ensure_required_params!(params)
+      each do |params_data|
+        params_data.ensure_required_params! params
+      end
+    end
   end
 end
