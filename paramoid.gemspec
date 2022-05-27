@@ -6,9 +6,9 @@ require 'paramoid/version'
 Gem::Specification.new do |s|
   s.name        = 'paramoid'
   s.version     = Paramoid::VERSION
-  s.date        = '2022-04-14'
-  s.summary     = 'Paramoid is a gem for sanitizing parameters'
-  s.description = 'Paramoid is a gem for sanitizing parameters'
+  s.date        = '2022-05-28'
+  s.summary     = 'Getting paranoid about your Rails application params? Try paramoid!'
+  s.description = 'Paramoid is a gem that extends Rails Strong Parameters, allowing to declare complex params structures with a super cool DSL, supporting required params, default values, groups, arrays and more.'
   s.authors     = ['Mònade']
   s.email       = 'team@monade.io'
   s.files = Dir['lib/**/*']

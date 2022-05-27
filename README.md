@@ -2,7 +2,7 @@
 
 # Paramoid
 
-Are you a bit _paranoid_ about your Rails application params? Try _paramoid_!
+Getting _paranoid_ about your Rails application params? Try _paramoid_!
 
 It's a replacement / extension for Rails Strong Parameters that allows to declare complex params structures with a super cool DSL, supporting required params, default values, groups, arrays and more.
 
@@ -11,7 +11,7 @@ It's a replacement / extension for Rails Strong Parameters that allows to declar
 Add the gem to your Gemfile
 
 ```ruby
-  gem 'paramoid', github: 'monade/paramoid'
+  gem 'paramoid'
 ```
 
 ## Usage
