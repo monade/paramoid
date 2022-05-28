@@ -1,4 +1,5 @@
 ![Tests](https://github.com/monade/paramoid/actions/workflows/test.yml/badge.svg)
+[![Gem Version](https://badge.fury.io/rb/paramoid.svg)](https://badge.fury.io/rb/paramoid)
 
 # Paramoid
 

@@ -1,6 +1,6 @@
 # Changelog
 All notable changes to this project made by Monade Team are documented in this file. For info refer to team@monade.io
 
-## [UNRELEASED]
+## [1.0.0] - 2022-05-28
 ### Added
-- First implementation
+- First release
