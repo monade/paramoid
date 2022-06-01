@@ -85,3 +85,12 @@ end
 ## TODO
 * Params type checking and regexp
 * Value transformers
+
+About Monade
+----------------
+
+![monade](https://monade.io/wp-content/uploads/2021/06/monadelogo.png)
+
+Paramoid is maintained by [mònade srl](https://monade.io/en/home-en/).
+
+We <3 open source! [Contact us!](https://monade.io/en/contact-us/)
