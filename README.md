@@ -5,15 +5,22 @@
 
 Getting _paranoid_ about your Rails application params? Try _paramoid_!
 
-It's a replacement / extension for Rails Strong Parameters that allows to declare complex params structures with a super cool DSL, supporting required params, default values, groups, arrays and more.
+Paramoid is an extension for Rails Strong Parameters that allows to sanitize complex params structures with a super cool DSL, supporting:
+
+* Required params and default values
+* A simplified nested structures management
+* Conditional sanitization, based on user auth, role or custom logic
+* Renaming and remapping parameter names
 
 ## Installation
 
 Add the gem to your Gemfile
 
 ```ruby
-  gem 'paramoid'
+gem 'paramoid'
 ```
+
+and run the `bundle install` command.
 
 ## Usage
 Declare a class extending `Paramoid::Base`.
@@ -82,8 +89,8 @@ class PeopleController < ApplicationController
 end
 ```
 
-## TODO
-* Params type checking and regexp
+## TODOs
+* Params type checking and regexp-based validations
 * Value transformers
 
 About Monade
@@ -93,4 +100,4 @@ About Monade
 
 Paramoid is maintained by [mònade srl](https://monade.io/en/home-en/).
 
-We <3 open source! [Contact us!](https://monade.io/en/contact-us/)
+We <3 open source software. [Contact us](https://monade.io/en/contact-us/) for your next project!
