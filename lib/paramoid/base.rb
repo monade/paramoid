@@ -8,6 +8,10 @@ module Paramoid
       ensure_required_params!(params)
     end
 
+    def permitted_params
+      scalar_params.to_params
+    end
+
     protected
 
     # @param [Symbol] name
@@ -80,10 +84,6 @@ module Paramoid
 
     def transformers
       @transformers ||= {}.with_indifferent_access
-    end
-
-    def permitted_params
-      scalar_params.to_params
     end
 
     def transformed_keys

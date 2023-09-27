@@ -66,12 +66,18 @@ module Paramoid
 
       _raise_on_missing_parameter!(params, output_key, current_path) if @required
 
-      if nested?
-        if params.is_a?(Array)
-          params.each { |param| @nested.ensure_required_params!(param[output_key], path: current_path) }
-        else
-          @nested.ensure_required_params!(params ? params[output_key] : nil, path: current_path)
+      return params unless nested?
+
+      ensure_required_nested_params!(params, current_path)
+    end
+
+    def ensure_required_nested_params!(params, current_path)
+      if params.is_a?(Array)
+        params.flatten.each do |param|
+          @nested.ensure_required_params!(param[output_key], path: current_path)
         end
+      else
+        @nested.ensure_required_params!(params ? params[output_key] : nil, path: current_path)
       end
 
       params
@@ -103,15 +109,21 @@ module Paramoid
       return params unless params
 
       params ||= @nesting_type == :list ? [] : {}
-      if params.is_a?(Array)
-        params.map! { |param| @nested.apply_defaults!(param[output_key]) }
-      else
-        return params unless params[output_key]
 
-        result = @nested.apply_defaults!(params[output_key])
-        params[output_key] = result if result
+      return apply_nested_param_default_when_available!(params, output_key) unless params.is_a?(Array)
+
+      params.map! do |param|
+        apply_nested_param_default_when_available!(param, output_key)
       end
       params
+    end
+
+    def apply_nested_param_default_when_available!(param, key)
+      return param unless param[key]
+
+      result = @nested.apply_defaults!(param[key])
+      param[key] = result if result
+      param
     end
 
     def to_defaults

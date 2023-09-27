@@ -53,7 +53,7 @@ describe ComplexParamsSanitizer, type: :controller do
             }
           },
           person: {},
-          items: [{}, {}]
+          items: [{}, { sub_items: [{ id: 5 }] }]
         }
       end
       it 'has the default value for those' do
@@ -62,7 +62,10 @@ describe ComplexParamsSanitizer, type: :controller do
             'buyer' => { 'payment_method' => { 'uuid' => 1 } },
             'total' => 0,
             'name' => 'some_name',
-            'items' => [{ 'price' => 0 }, { 'price' => 0 }],
+            'items' => [
+              { 'price' => 0 },
+              { 'price' => 0, 'sub_items' => [{ 'price' => 0, 'id' => 5 }] }
+            ],
             'person_attributes' => { 'role' => :user }
           }
         )
@@ -91,11 +94,24 @@ describe ComplexParamsSanitizer, type: :controller do
       ActionController::Parameters.new(params_hash)
     end
 
+    it 'returns permitted params' do
+      expect(subject.permitted_params).to eq(
+        [
+          :total, :name,
+          { buyer: [{ payment_method: [:id] }],
+            items: [:id, :name, :price, :discount, { sub_items: [:id, :price] }],
+            person: %i[id full_name role] }
+        ]
+      )
+    end
+
     it 'has the default values correctly nested' do
       expect(sanitized.to_unsafe_h).to eq(
         {
           'buyer' => { 'payment_method' => { 'uuid' => 1 } },
-          'items' => [{ 'price' => 0, 'name' => 'some_name', 'discount' => 0.1, 'id' => 5 }],
+          'items' => [
+            { 'price' => 0, 'name' => 'some_name', 'discount' => 0.1, 'id' => 5 }
+          ],
           'total' => 100,
           'name' => 'some_name',
           'person_attributes' => { 'role' => :admin, 'id' => 1, 'full_name' => 'some_name' }
