@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# rubocop:disable Metrics/BlockLength
 describe Paramoid::Object do
   let(:name) { :some_param }
   let(:alias_name) { :some_param }
@@ -105,10 +106,10 @@ describe Paramoid::Object do
         expect do
           subject.ensure_required_params!(params)
         end.to raise_error(ActionController::ParameterMissing,
-                           'param is missing or the value is empty: nested')
+                           'param is missing or the value is empty: some_param.nested')
       end
 
-      context 'and it\'s required' do
+      context 'and some_param is required' do
         let(:required) { true }
 
         it 'raises an error on the parent param' do
@@ -118,6 +119,18 @@ describe Paramoid::Object do
                              'param is missing or the value is empty: some_param')
         end
       end
+
+      context 'when params is nil' do
+        let(:params) { nil }
+
+        it 'skips the check' do
+          expect do
+            subject.ensure_required_params!(params)
+          end.to raise_error(ActionController::ParameterMissing,
+                             'param is missing or the value is empty: some_param.nested')
+        end
+      end
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

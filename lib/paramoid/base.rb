@@ -3,8 +3,8 @@ module Paramoid
     # @param [ActionController::Parameters] params
     def sanitize(params)
       params = params.permit(*permitted_params)
-      scalar_params.transform_params!(params)
-      params = default_params.merge(params)
+      context.transform_params!(params)
+      context.apply_defaults!(params)
       ensure_required_params!(params)
     end
 
@@ -13,9 +13,44 @@ module Paramoid
     # @param [Symbol] name
     # @param [Symbol] as
     # @param [Lambda | NilClass] transformer
-    def group!(name, as: nil, transformer: nil)
+    def group(name, as: nil, transformer: nil, &block)
+      _nest_rule(name, as: as, transformer: transformer, nesting_type: :object, &block)
+    end
+
+    def list(name, as: nil, transformer: nil, &block)
+      _nest_rule(name, as: as, transformer: transformer, nesting_type: :list, &block)
+    end
+
+    alias array list
+
+    # @param [Array<Symbol>] names
+    def params(*names, required: false)
+      names.each { |name| param name, required: required }
+    end
+
+    def param(name, as: nil, transformer: nil, default: nil, required: false)
       key = as || name
-      data = Object.new(name, key, nested: List.new, transformer: transformer)
+      data = Object.new(name, key, nested: nil, default: default, transformer: transformer, required: required)
+      context << data
+    end
+
+    def default(name, value)
+      data = Object.new(name, name, nested: nil, default: value)
+      context << data
+    end
+
+    alias param! param
+    alias params! params
+    alias group! group
+    alias default! default
+    alias array! array
+    alias list! list
+
+    private
+
+    def _nest_rule(name, nesting_type:, as: nil, transformer: nil)
+      key = as || name
+      data = Object.new(name, key, nested: List.new, nesting_type: nesting_type, transformer: transformer)
       context << data
       return unless block_given?
 
@@ -24,27 +59,6 @@ module Paramoid
       yield
       @context = old_context
     end
-
-    alias list! group!
-    alias array! group!
-
-    # @param [Array<Symbol>] names
-    def params!(*names, required: false)
-      names.each { |name| param! name, required: required }
-    end
-
-    def param!(name, as: nil, transformer: nil, default: nil, required: false)
-      key = as || name
-      data = Object.new(name, key, nested: nil, default: default, transformer: transformer, required: required)
-      context << data
-    end
-
-    def default!(name, value)
-      data = Object.new(name, name, nested: nil, default: value)
-      context << data
-    end
-
-    private
 
     def context
       @context ||= scalar_params

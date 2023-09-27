@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Paramoid
   class List < Array
     def to_params
@@ -12,13 +14,20 @@ module Paramoid
       end
     end
 
+    def apply_defaults!(params)
+      each do |params_data|
+        params = params_data.apply_defaults! params
+      end
+      params
+    end
+
     def to_defaults
       inject({}) { |a, b| a.merge!(b.to_defaults) }
     end
 
-    def ensure_required_params!(params)
+    def ensure_required_params!(params, path: [])
       each do |params_data|
-        params_data.ensure_required_params! params
+        params_data.ensure_required_params! params, path: path
       end
     end
   end

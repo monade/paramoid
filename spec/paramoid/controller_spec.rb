@@ -6,8 +6,7 @@ describe 'controllers' do
       current_user_id: 2,
       first_name: 'John',
       last_name: 'Doe',
-      # TODO: Implement transformers
-      # email: 'Hello@MyCustomMAIL.COM',
+      email: 'Hello@MyCustomMAIL.COM',
       role: 'some_role',
       unwanted: 'hello',
       an_object_filtered: { name: 'value' },

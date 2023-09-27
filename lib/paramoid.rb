@@ -6,7 +6,6 @@ module Paramoid
   autoload :Object
   autoload :List
   autoload :Base
-  # autoload :Controller
 end
 
 require 'paramoid/controller'

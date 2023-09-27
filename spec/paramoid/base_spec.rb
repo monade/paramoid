@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# rubocop:disable Metrics/BlockLength
 describe PersonParamsSanitizer, type: :controller do
   let(:params) do
     ActionController::Parameters.new(params_hash)
@@ -15,8 +16,7 @@ describe PersonParamsSanitizer, type: :controller do
         current_user_id: 2,
         first_name: 'John',
         last_name: 'Doe',
-        # TODO: Implement transformers
-        # email: 'Hello@MyCustomMAIL.COM',
+        email: 'Hello@MyCustomMAIL.COM',
         role: 'some_role',
         unwanted: 'hello',
         an_object_filtered: { name: 'value' },
@@ -38,13 +38,12 @@ describe PersonParamsSanitizer, type: :controller do
     end
 
     it 'keeps only allowed params' do
-      expect(sanitized).to eq(
+      expect(sanitized.to_unsafe_h).to eq(
         {
           'current_user_id' => 2,
           'first_name' => 'John',
           'last_name' => 'Doe',
-          # TODO: Implement transformers
-          # 'email' => 'hello@mycustommail.com',
+          'email' => 'hello@mycustommail.com',
           'some_default' => 1,
           'an_array_unfiltered' => [1, 2, 3, 4, 5]
         }
@@ -56,7 +55,10 @@ describe PersonParamsSanitizer, type: :controller do
         {}
       end
       it 'raises an error' do
-        expect { sanitized }.to raise_error(ActionController::ParameterMissing)
+        expect { sanitized }.to raise_error(
+          ActionController::ParameterMissing,
+          'param is missing or the value is empty: current_user_id'
+        )
       end
     end
 
@@ -78,3 +80,4 @@ describe PersonParamsSanitizer, type: :controller do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

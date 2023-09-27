@@ -202,7 +202,6 @@ end
 
 ## TODOs
 * Params type checking and regexp-based validations
-* Value transformers
 
 About Monade
 ----------------

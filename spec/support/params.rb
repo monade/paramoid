@@ -21,3 +21,33 @@ class PersonParamsSanitizer < Paramoid::Base
     end
   end
 end
+
+class ComplexParamsSanitizer < Paramoid::Base
+  def initialize(user = nil)
+    group :person, as: :person_attributes do
+      params :id, :full_name
+
+      if user.admin?
+        param :role, default: :admin
+      else
+        default :role, :user
+      end
+    end
+
+    group :buyer do
+      group :payment_method do
+        param :id, required: true, as: :uuid
+      end
+    end
+
+    array :items do
+      params :id, :name
+
+      default :price, 0
+      param :discount, transformer: ->(data) { data&.to_f / 100 } if user.admin?
+    end
+
+    default :total, 0
+    param :name, required: true
+  end
+end
