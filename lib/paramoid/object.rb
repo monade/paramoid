@@ -53,6 +53,7 @@ module Paramoid
       end
     end
 
+    # @return [Hash] the required params
     def to_required_params
       if nested?
         @nested.to_required_params
@@ -61,6 +62,9 @@ module Paramoid
       end
     end
 
+    # @param [Hash] params
+    # @param [Array<Symbol>] path
+    # @raise [ActionController::ParameterMissing] if one of the required params is missing
     def ensure_required_params!(params, path: [])
       current_path = [*path, @name]
 
@@ -83,6 +87,8 @@ module Paramoid
       params
     end
 
+    # @param [Hash] params
+    # @return [Hash] the params with the default values
     def apply_defaults!(params)
       return apply_nested_defaults!(params) if nested?
 

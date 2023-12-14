@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
@@ -28,6 +30,7 @@ describe Paramoid::Object do
     end
   end
 
+  # FIXME: deprecate to_defaults
   describe '#to_defaults' do
     it 'returns an empty value' do
       expect(subject.to_defaults).to eq({})

@@ -1,4 +1,18 @@
 module Paramoid
+  # The base class for Paramoid.
+  # @example
+  #   class MyParamoidSanitizer < Paramoid::Base
+  #     def initialize(user = nil)
+  #       param :name, as: :first_name
+  #       param :age, transformer: ->(age) { age.to_i }
+  #       group :address do
+  #         param :street
+  #         param :city
+  #         param :state
+  #         param :zip
+  #       end
+  #     end
+  #   end
   class Base
     # @param [ActionController::Parameters] params
     def sanitize(params)

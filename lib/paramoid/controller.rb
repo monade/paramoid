@@ -1,6 +1,9 @@
 require 'action_controller'
 
 module Paramoid
+  # This module provides a `sanitize_params!` method that
+  # can be used in controllers to sanitize incoming parameters using
+  # the defined sanitizer class.
   module Controller
     extend ActiveSupport::Concern
 

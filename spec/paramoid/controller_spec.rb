@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
+# rubocop:disable Metrics/BlockLength
 describe 'controllers' do
   let(:params_hash) do
     {
@@ -40,3 +43,4 @@ describe 'controllers' do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
