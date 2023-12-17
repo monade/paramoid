@@ -47,7 +47,7 @@ class ComplexParamsSanitizer < Paramoid::Base
       param :discount, transformer: ->(data) { data&.to_f / 100 } if user.admin?
 
       array :sub_items do
-        param :id
+        param :id, required: true
         default :price, 0
       end
     end

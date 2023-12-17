@@ -105,11 +105,15 @@ describe Paramoid::Object do
     context 'when it\'s nested' do
       let(:nested) { described_class.new(:nested, nil, required: true) }
 
-      it 'raises an error' do
-        expect do
-          subject.ensure_required_params!(params)
-        end.to raise_error(ActionController::ParameterMissing,
-                           'param is missing or the value is empty: some_param.nested')
+      context 'and some_param is present, but nested is required' do
+        let(:params_hash) { { 'not_this_param' => 'some_value', 'some_param' => {} } }
+
+        it 'raises an error' do
+          expect do
+            subject.ensure_required_params!(params)
+          end.to raise_error(ActionController::ParameterMissing,
+                             'param is missing or the value is empty: some_param.nested')
+        end
       end
 
       context 'and some_param is required' do
@@ -129,8 +133,8 @@ describe Paramoid::Object do
         it 'skips the check' do
           expect do
             subject.ensure_required_params!(params)
-          end.to raise_error(ActionController::ParameterMissing,
-                             'param is missing or the value is empty: some_param.nested')
+          end.not_to raise_error(ActionController::ParameterMissing,
+                                 'param is missing or the value is empty: some_param.nested')
         end
       end
     end

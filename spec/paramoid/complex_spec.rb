@@ -72,6 +72,30 @@ describe ComplexParamsSanitizer, type: :controller do
           }
         )
       end
+
+      context 'and the required parameter is missing' do
+        let(:params_hash) do
+          {
+
+            unwanted: 1,
+            name: 'some_name',
+            buyer: {
+              payment_method: {
+                id: 1
+              }
+            },
+            person: {},
+            items: [{}, { sub_items: [{ price: 5 }] }]
+          }
+        end
+
+        it 'raises an error' do
+          expect { sanitized }.to raise_error(
+            ActionController::ParameterMissing,
+            'param is missing or the value is empty: items.sub_items.id'
+          )
+        end
+      end
     end
   end
 
@@ -126,7 +150,10 @@ describe ComplexParamsSanitizer, type: :controller do
     let(:user) { double(admin?: false) }
     let(:params_hash) do
       {
-        name: 'some_name'
+        name: 'some_name',
+        buyer: {
+          payment_method: {}
+        }
       }
     end
 

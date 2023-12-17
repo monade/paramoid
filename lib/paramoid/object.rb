@@ -66,6 +66,13 @@ module Paramoid
     # @param [Array<Symbol>] path
     # @raise [ActionController::ParameterMissing] if one of the required params is missing
     def ensure_required_params!(params, path: [])
+      if params.is_a?(Array)
+        params.flatten.each do |param|
+          ensure_required_params!(param, path: path)
+        end
+        return params
+      end
+
       current_path = [*path, @name]
 
       _raise_on_missing_parameter!(params, output_key, current_path) if @required
@@ -76,13 +83,9 @@ module Paramoid
     end
 
     def ensure_required_nested_params!(params, current_path)
-      if params.is_a?(Array)
-        params.flatten.each do |param|
-          @nested.ensure_required_params!(param[output_key], path: current_path)
-        end
-      else
-        @nested.ensure_required_params!(params ? params[output_key] : nil, path: current_path)
-      end
+      return params if current_path.size > 1 && params.nil?
+
+      @nested.ensure_required_params!(params ? params[output_key] : nil, path: current_path)
 
       params
     end
@@ -156,6 +159,7 @@ module Paramoid
     private
 
     def _raise_on_missing_parameter!(params, key, current_path)
+      return if params.nil?
       return if _param_exist?(params, key)
 
       raise ActionController::ParameterMissing, current_path.join('.')
