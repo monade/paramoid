@@ -98,7 +98,7 @@ describe Paramoid::Object do
         expect do
           subject.ensure_required_params!(params)
         end.to raise_error(ActionController::ParameterMissing,
-                           'param is missing or the value is empty: some_param')
+                           /param is missing or the value is empty( or invalid)?: some_param/)
       end
     end
 
@@ -112,7 +112,7 @@ describe Paramoid::Object do
           expect do
             subject.ensure_required_params!(params)
           end.to raise_error(ActionController::ParameterMissing,
-                             'param is missing or the value is empty: some_param.nested')
+                             /param is missing or the value is empty( or invalid)?: some_param.nested/)
         end
       end
 
@@ -123,7 +123,7 @@ describe Paramoid::Object do
           expect do
             subject.ensure_required_params!(params)
           end.to raise_error(ActionController::ParameterMissing,
-                             'param is missing or the value is empty: some_param')
+                             /param is missing or the value is empty( or invalid)?: some_param/)
         end
       end
 

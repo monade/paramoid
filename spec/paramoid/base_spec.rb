@@ -59,7 +59,7 @@ describe PersonParamsSanitizer, type: :controller do
       it 'raises an error' do
         expect { sanitized }.to raise_error(
           ActionController::ParameterMissing,
-          'param is missing or the value is empty: current_user_id'
+          /param is missing or the value is empty( or invalid)?: current_user_id/
         )
       end
     end

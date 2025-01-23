@@ -92,7 +92,7 @@ describe ComplexParamsSanitizer, type: :controller do
         it 'raises an error' do
           expect { sanitized }.to raise_error(
             ActionController::ParameterMissing,
-            'param is missing or the value is empty: items.sub_items.id'
+            /param is missing or the value is empty( or invalid)?: items.sub_items.id/
           )
         end
       end
@@ -160,7 +160,7 @@ describe ComplexParamsSanitizer, type: :controller do
     it 'raises an error' do
       expect { sanitized }.to raise_error(
         ActionController::ParameterMissing,
-        'param is missing or the value is empty: buyer.payment_method.id'
+        /param is missing or the value is empty( or invalid)?: buyer.payment_method.id/
       )
     end
   end
