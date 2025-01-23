@@ -1,3 +1,4 @@
+require 'logger'
 require 'action_controller'
 require 'rspec'
 require 'paramoid'
