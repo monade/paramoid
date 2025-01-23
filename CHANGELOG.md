@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project made by Monade Team are documented in this file. For info refer to team@monade.io
 
+## [2.0.0] - 2025-01-23
+### Added
+- Support for Ruby 3.4
+- Support for Rails 8.0
+
+### Removed
+- Support for Ruby 2.7
+- Support for Rails 5
+
 ## [2.0.0-BETA] - 2023-09-27
 ### Added
 - `transformer` option to param, that allows to transform the value received from a parameter before assigning it to the sanitized hash.
