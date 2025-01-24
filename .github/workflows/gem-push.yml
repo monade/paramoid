@@ -7,3 +7,5 @@ on:
 jobs:
   build:
     uses: monade/reusable-workflows/.github/workflows/monade-ruby-rails-gems-release.yml@main
+    secrets:
+      RUBYGEMS_AUTH_TOKEN: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
